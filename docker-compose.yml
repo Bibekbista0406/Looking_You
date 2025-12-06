@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  look-for-kri:
+    build: .
+    container_name: look-for-kri
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "3333:3333"
+    volumes:
+      - ./data:/app
+      - ./logs:/var/log
+    environment:
+      - TZ=UTC
+      - TERM=xterm
+    stdin_open: true
+    tty: true
+    command: /bin/bash

@@ -1,0 +1,45 @@
+FROM alpine:latest
+
+LABEL maintainer="Bibek Bista"
+LABEL version="1.0"
+LABEL description="Look_For_Kri - Information Gathering Tool"
+
+# Install dependencies
+RUN apk update && apk add --no-cache \
+    php \
+    php-curl \
+    wget \
+    curl \
+    git \
+    unzip \
+    bash \
+    python3 \
+    py3-pip
+
+# Download Cloudflared
+RUN wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O /usr/local/bin/cloudflared \
+    && chmod +x /usr/local/bin/cloudflared
+
+# Clone Look_For_Kri
+RUN git clone https://github.com/bibekbista/look-for-kri.git /app
+
+# Set working directory
+WORKDIR /app
+
+# Make script executable
+RUN chmod +x look-kri.sh
+
+# Create volume for data persistence
+VOLUME ["/app/saved.ip.txt", "/app/data.txt", "/app/targetreport.txt"]
+
+# Warning message
+RUN echo "##############################################" > /WARNING.txt && \
+    echo "#  WARNING: Educational purposes only!       #" >> /WARNING.txt && \
+    echo "#  Use only for authorized testing.          #" >> /WARNING.txt && \
+    echo "##############################################" >> /WARNING.txt
+
+# Expose port for local server
+EXPOSE 8080
+
+# Run warning on start
+CMD cat /WARNING.txt && /bin/bash

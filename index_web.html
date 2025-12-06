@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Looking_You — Professional Geolocation Suite</title>
+  <meta name="description" content="Looking_You — professional geolocation & telemetry demo suite. Designed for authorized security research, training and demos." />
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <style>
+    :root{
+      --bg:#f5f7fa;
+      --muted:#6b7280;
+      --text:#0f172a;
+      --accent:#2563eb;
+      --glass: rgba(255,255,255,0.75);
+      --panel-shadow: 0 12px 40px rgba(16,24,40,0.06);
+      --radius:14px;
+      --transition:240ms cubic-bezier(.2,.9,.3,1);
+    }
+    :root[data-theme='dark']{
+      --bg:#071025;
+      --muted:#94a3b8;
+      --text:#e6eef8;
+      --accent:#4f9cff;
+      --glass: rgba(6,8,14,0.6);
+      --panel-shadow: 0 14px 48px rgba(2,6,23,0.6);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,var(--bg),var(--bg));
+      color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      transition:background var(--transition), color var(--transition);
+    }
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:1200;display:flex;align-items:center;justify-content:space-between;
+      gap:12px;padding:14px 20px;background:var(--glass);backdrop-filter: blur(8px);
+      border-bottom:1px solid rgba(0,0,0,0.04);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo-wrap{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),#7c3aed);box-shadow:var(--panel-shadow);flex-shrink:0}
+    .brand-title{font-weight:800}
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px;border-radius:8px;transition:all var(--transition)}
+    nav a:hover{color:var(--accent);transform:translateY(-2px)}
+    .header-actions{display:flex;gap:8px;align-items:center}
+
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#7c3aed);color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:var(--panel-shadow)}
+    .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    /* Main container & hero */
+    main{max-width:1200px;margin:28px auto;padding:18px}
+    .hero{
+      display:grid;grid-template-columns:1fr 440px;gap:24px;align-items:center;
+    }
+    .hero-card{background:var(--glass);border-radius:var(--radius);padding:22px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow)}
+    h1{font-size:2.4rem;margin:0 0 8px}
+    p.lead{color:var(--muted);margin:0 0 12px;line-height:1.5}
+
+    /* new organized content sections */
+    section{margin-top:26px}
+    .section-title{display:flex;justify-content:space-between;align-items:end;gap:12px}
+    .section-title h2{font-size:1.6rem;margin:0}
+    .section-sub{color:var(--muted);font-size:0.95rem;margin-top:6px}
+
+    /* Why Looking_You */
+    .why{display:grid;grid-template-columns:1fr 240px;gap:18px;align-items:start}
+    .why-list{display:grid;gap:12px}
+    .why-item{background:var(--glass);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow);display:flex;gap:12px}
+    .why-item .ico{width:44px;height:44px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;color:var(--accent)}
+
+    /* 3 Key Modules */
+    .modules{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+    .module{background:var(--glass);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow);display:flex;flex-direction:column;gap:10px}
+    .module h3{margin:0;font-size:1.05rem}
+    .module p{color:var(--muted);font-size:0.95rem;margin:0}
+
+    /* How It Works (steps) */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:12px}
+    .step{background:var(--glass);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);text-align:center}
+    .step .num{font-weight:800;font-size:1.1rem;color:var(--accent)}
+
+    /* Screens / Templates carousel (simple grid) */
+    .screens{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .screen{height:160px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+
+    /* Install block */
+    .install-block{display:grid;grid-template-columns:1fr 260px;gap:12px;align-items:start}
+    pre.code{background:#0b1220;color:#dbeafe;padding:12px;border-radius:10px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",monospace;overflow:auto;margin:0}
+
+    /* Legal & footer */
+    .legal{color:var(--muted);font-size:0.95rem}
+    footer{margin-top:28px;padding:18px;text-align:center;color:var(--muted)}
+
+    /* responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .why{grid-template-columns:1fr}
+      .modules{grid-template-columns:repeat(2,1fr)}
+      .screens{grid-template-columns:repeat(2,1fr)}
+      .steps{grid-template-columns:repeat(2,1fr)}
+      .install-block{grid-template-columns:1fr}
+      nav{display:none}
+    }
+    @media (max-width:560px){
+      h1{font-size:1.6rem}
+      .modules{grid-template-columns:1fr}
+      .screens{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr}
+      header{padding:10px}
+      .brand-title{font-size:15px}
+      .logo-wrap{width:40px;height:40px}
+    }
+
+    /* intro modal */
+    .intro-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(2,6,23,0.6),rgba(2,6,23,0.5));z-index:1300;padding:20px;backdrop-filter: blur(6px)}
+    .intro-card{width:min(820px,96%);background:var(--glass);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow);display:flex;flex-direction:column;gap:12px;align-items:center}
+    .intro-actions{display:flex;gap:10px;align-items:center}
+    .skip{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    /* small entrance */
+    .reveal{opacity:0;transform:translateY(8px);transition:all 360ms cubic-bezier(.2,.9,.3,1)}
+    .reveal.show{opacity:1;transform:none}
+
+  </style>
+</head>
+<body>
+
+  <!-- Lottie Intro (plays once) -->
+  <div id="intro" class="intro-wrap" style="display:none" aria-hidden="true">
+    <div class="intro-card" role="dialog" aria-labelledby="introTitle">
+      <div style="width:100%;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div id="introTitle" style="font-weight:800;font-size:18px">Welcome to Looking_You</div>
+          <div style="color:var(--muted);font-size:13px">Professional geolocation & telemetry demo suite</div>
+        </div>
+        <button class="skip" id="skipIntro" aria-label="Skip intro">Skip</button>
+      </div>
+
+      <!-- Swap this src for any Lottie JSON if you want -->
+      <lottie-player id="lottie" src="https://assets4.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent" speed="1" style="width:100%;max-width:720px;height:320px" autoplay></lottie-player>
+
+      <div style="display:flex;gap:10px;margin-top:6px" class="intro-actions">
+        <button class="btn-primary" id="startBtn">Get started</button>
+        <button class="btn-ghost" id="learnBtn">View docs</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand" aria-label="Brand">
+      <div class="logo-wrap" aria-hidden="true">
+        <!-- Inline professional SVG logo -->
+        <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Looking_You logo">
+          <defs>
+            <linearGradient id="lg1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#4f9cff"/>
+              <stop offset="1" stop-color="#7c3aed"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="44" height="44" rx="10" fill="url(#lg1)"/>
+          <path d="M15 30 L24 16 L33 30 Z" fill="white" opacity="0.98" />
+          <circle cx="24" cy="34" r="4" fill="rgba(255,255,255,0.95)"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">Looking_You</div>
+        <div class="brand-sub" style="color:var(--muted);font-size:12px">Professional Geolocation Suite</div>
+      </div>
+    </div>
+
+    <nav aria-label="Main navigation">
+      <a href="#why">Why</a>
+      <a href="#modules">Modules</a>
+      <a href="#how">How it works</a>
+      <a href="#install">Install</a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="themeToggle" class="btn-ghost" title="Toggle theme"><i id="themeIco" class="fa-regular fa-moon"></i>&nbsp;<span style="font-weight:700">Theme</span></button>
+      <button id="downloadTop" class="btn-primary"><i class="fa-solid fa-download"></i>&nbsp;Download</button>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-card reveal show" aria-labelledby="heroH">
+        <h1 id="heroH">Looking_You — Clean, secure geolocation demos for teams</h1>
+        <p class="lead">Enterprise-ready templates, privacy-first defaults and modern UX — built to teach and test responsibly. Designed for security teams, educators and technical demos.</p>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <button id="downloadHero" class="btn-primary"><i class="fa-solid fa-download"></i>&nbsp;Download demo</button>
+          <a href="#why" class="btn-ghost">Why Looking_You?</a>
+        </div>
+
+        <!-- quick stat strip -->
+        <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
+          <div style="background:var(--glass);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow)"><div style="font-size:13px;color:var(--muted)">Downloads</div><div style="font-weight:800">1,240</div></div>
+          <div style="background:var(--glass);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow)"><div style="font-size:13px;color:var(--muted)">Templates</div><div style="font-weight:800">12</div></div>
+          <div style="background:var(--glass);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow)"><div style="font-size:13px;color:var(--muted)">Tunnel options</div><div style="font-weight:800">4</div></div>
+        </div>
+      </div>
+
+      <aside class="hero-card reveal show" aria-labelledby="overviewH" id="overviewPanel">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div style="font-size:13px;color:var(--muted)">Version</div><div style="font-weight:800">v2.2</div></div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(0,0,0,0.04);margin:12px 0">
+        <div style="font-size:14px;color:var(--muted)">Quick Links</div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <button class="btn-ghost" onclick="location.hash='#install'">Install</button>
+          <button class="btn-ghost" onclick="location.hash='#how'">How it works</button>
+          <button class="btn-primary" onclick="downloadDemo()">Download</button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- WHY -->
+    <section id="why">
+      <div class="section-title">
+        <h2>Why Looking_You?</h2>
+        <div style="color:var(--muted)">Concise benefits for teams</div>
+      </div>
+      <p class="section-sub">Designed to be clear, safe, and demonstrable — perfect for training and authorized research.</p>
+
+      <div class="why" style="margin-top:12px">
+        <div class="why-list">
+          <div class="why-item reveal show">
+            <div class="ico"><i class="fa-solid fa-bolt"></i></div>
+            <div>
+              <div style="font-weight:700">Fast prototyping</div>
+              <div style="color:var(--muted);font-size:14px;margin-top:6px">Prebuilt templates and scripts to get demos running in minutes.</div>
+            </div>
+          </div>
+
+          <div class="why-item reveal show">
+            <div class="ico"><i class="fa-solid fa-user-shield"></i></div>
+            <div>
+              <div style="font-weight:700">Privacy-first</div>
+              <div style="color:var(--muted);font-size:14px;margin-top:6px">Built-in consent dialogs, retention limits, and auditable logs.</div>
+            </div>
+          </div>
+
+          <div class="why-item reveal show">
+            <div class="ico"><i class="fa-solid fa-book-open"></i></div>
+            <div>
+              <div style="font-weight:700">Educational</div>
+              <div style="color:var(--muted);font-size:14px;margin-top:6px">Clear docs and example flows for blue teams and educators.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card" style="padding:18px;height:100%">
+          <div style="font-weight:800">Product overview</div>
+          <div style="color:var(--muted);margin-top:8px">Looking_You is a modular suite focused on safe, auditable demos and training. The right choice when process, privacy, and clarity matter.</div>
+
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button class="btn-primary" onclick="downloadDemo()">Get Demo</button>
+            <button class="btn-ghost" onclick="location.hash='#modules'">See modules</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 Key Modules -->
+    <section id="modules">
+      <div class="section-title">
+        <h2>Key Modules</h2>
+        <div style="color:var(--muted)">Core components that compose a demo environment</div>
+      </div>
+
+      <div class="modules">
+        <div class="module reveal show">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <h3>Location Engine</h3>
+              <p>GPS-first resolution, IP fallback, device metadata & accuracy data for richer context.</p>
+            </div>
+            <div style="font-size:22px;color:var(--accent)"><i class="fa-solid fa-map-location-dot"></i></div>
+          </div>
+          <div style="color:var(--muted);font-size:13px;margin-top:8px">Includes simulated accuracy modifiers for training scenarios.</div>
+        </div>
+
+        <div class="module reveal show">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <h3>Tunnel Manager</h3>
+              <p>Automated configs for Cloudflare Tunnel, ngrok, and SSH forwarding with healthchecks & fallback order.</p>
+            </div>
+            <div style="font-size:22px;color:var(--accent)"><i class="fa-solid fa-network-wired"></i></div>
+          </div>
+          <div style="color:var(--muted);font-size:13px;margin-top:8px">Scripted helpers and examples for reliability during demos.</div>
+        </div>
+
+        <div class="module reveal show">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <h3>Privacy & Audit</h3>
+              <p>Retention policies, explicit consent flows, redactable logs and audit reports for governance.</p>
+            </div>
+            <div style="font-size:22px;color:var(--accent)"><i class="fa-solid fa-shield-halved"></i></div>
+          </div>
+          <div style="color:var(--muted);font-size:13px;margin-top:8px">Everything designed to be reviewable by compliance teams.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how">
+      <div class="section-title">
+        <h2>How it works</h2>
+        <div style="color:var(--muted)">From deploy to internet — simple steps</div>
+      </div>
+
+      <div class="steps" style="margin-top:12px">
+        <div class="step reveal show">
+          <div class="num">1</div>
+          <div style="font-weight:700;margin-top:8px">Install</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Clone repo, run the tool with safe defaults.</div>
+        </div>
+
+        <div class="step reveal show">
+          <div class="num">2</div>
+          <div style="font-weight:700;margin-top:8px">Configure</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Choose tunnel, template, and retention policy for the session.</div>
+        </div>
+
+        <div class="step reveal show">
+          <div class="num">3</div>
+          <div style="font-weight:700;margin-top:8px">Run</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Start , observe logs, collect telemetry for analysis.</div>
+        </div>
+
+        <div class="step reveal show">
+          <div class="num">4</div>
+          <div style="font-weight:700;margin-top:8px">Audit</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Export audit artifacts and follow retention policies after the tools.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screens / Templates -->
+    <section id="screens">
+      <div class="section-title">
+        <h2>Screens & Templates</h2>
+        <div style="color:var(--muted)">Example UI screens included in the repo</div>
+      </div>
+
+      <div class="screens">
+        <div class="screen reveal show">Birthday Template</div>
+        <div class="screen reveal show">Your own custom links</div>
+        <div class="screen reveal show">Simple and default page</div>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section id="install">
+      <div class="section-title">
+        <h2 id="installTitle">Installation</h2>
+        <div style="color:var(--muted)">Quickstart</div>
+      </div>
+
+      <div class="install-block" style="margin-top:12px">
+        <div class="card" style="padding:12px">
+          <p style="color:var(--muted);margin:0 0 8px">Clone the demo repo and run the safe installer:</p>
+          <pre class="code">git clone https://github.com/Bibekbista0406/Looking_You/tree/main
+cd looking-you
+chmod +x look-kri.sh
+./look-kri.sh</pre>
+
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn-primary" id="copyInstall">Copy commands</button>
+            <button class="btn-ghost" id="openReadme">Open README</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding:14px">
+          <div style="font-size:13px;color:var(--muted)">Quick checklist</div>
+          <ul style="margin-top:8px;color:var(--muted);line-height:1.6">
+            <li>Confirm you have written authorization for testing</li>
+            <li>Choose tunnel provider (Cloudflare, ngrok, SSH)</li>
+            <li>Review retention & logging options</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Usage -->
+    <section id="usage">
+      <div class="section-title">
+        <h2>Usage</h2>
+        <div style="color:var(--muted)">Examples & best practices</div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <p style="color:var(--muted);margin:0 0 8px">Examples included:</p>
+        <ul style="color:var(--muted);line-height:1.6">
+          <li>Training workshop flow with consent dialog</li>
+          <li>Red team tabletop demonstration (authorized)</li>
+          <li>Educator example with simulated accuracy controls</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Legal -->
+    <section id="legal">
+      <div class="section-title">
+        <h2>Legal & Responsible Use</h2>
+        <div style="color:var(--muted)">Important — read before running</div>
+      </div>
+
+      <div class="card legal" style="margin-top:12px">
+        <p><strong>By using Looking_You you agree:</strong></p>
+        <ul>
+          <li>Use for authorized research, training and demos only.</li>
+          <li>Comply with all applicable laws and organizational policy.</li>
+          <li>Follow the included retention & redaction guidance after a demo.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © <span id="year"></span> Looking_You — For authorized security research & training only.
+  </footer>
+
+  <script>
+    // --- Utilities
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // demo file generator & download
+    function generateDemo(){
+      return `#!/bin/bash
+# Looking_You demo v2.2
+echo "Looking_You demo starter"
+echo "Repo: https://github.com/Bibekbista0406/Looking_You/tree/main"
+`;
+    }
+    function downloadDemo(){
+      const blob = new Blob([generateDemo()], {type: 'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'looking-you-demo.sh';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+    document.getElementById('downloadTop').addEventListener('click', downloadDemo);
+    document.getElementById('downloadHero').addEventListener('click', downloadDemo);
+
+    // copy install
+    document.getElementById('copyInstall').addEventListener('click', ()=>{
+      const text = 'git clone https://github.com/Bibekbista0406/Looking_You/tree/main looking-you\\nchmod +x look-kri.sh\\n./look-kri.sh';
+      navigator.clipboard.writeText(text).then(()=>{ const b=document.getElementById('copyInstall'); b.textContent='Copied ✓'; setTimeout(()=>b.textContent='Copy commands',1400); });
+    });
+
+    // Open README placeholder
+    document.getElementById('openReadme').addEventListener('click', ()=>{ alert('Open README in your repository or view online.'); });
+
+    // --- Theme toggle (persist)
+    const ROOT = document.documentElement;
+    const THEME_KEY = 'looking_you_theme_v1';
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIco = document.getElementById('themeIco');
+
+    function applyTheme(t){
+      if(t === 'dark'){ ROOT.setAttribute('data-theme','dark'); themeIco.className='fa-solid fa-sun'; themeBtn.setAttribute('aria-pressed','true'); }
+      else { ROOT.removeAttribute('data-theme'); themeIco.className='fa-regular fa-moon'; themeBtn.setAttribute('aria-pressed','false'); }
+    }
+
+    (function initTheme(){
+      try {
+        const saved = localStorage.getItem(THEME_KEY);
+        if(saved) applyTheme(saved);
+        else {
+          const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          applyTheme(prefers ? 'dark' : 'light');
+        }
+      } catch(e){ applyTheme('light'); }
+    })();
+
+    themeBtn.addEventListener('click', ()=>{
+      const current = ROOT.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch(e){ /* ignore */ }
+    });
+
+    // --- Lottie intro logic (play once)
+    const intro = document.getElementById('intro');
+    const START_KEY = 'looking_you_intro_seen_v1';
+    function showIntroIfNeeded(){
+      try {
+        const seen = localStorage.getItem(START_KEY);
+        if(!seen){ intro.style.display='flex'; intro.setAttribute('aria-hidden','false'); }
+      } catch(e){ intro.style.display='flex'; intro.setAttribute('aria-hidden','false'); }
+    }
+    showIntroIfNeeded();
+
+    document.getElementById('skipIntro').addEventListener('click', closeIntro);
+    document.getElementById('startBtn').addEventListener('click', closeIntro);
+    document.getElementById('learnBtn').addEventListener('click', ()=>{
+      closeIntro(); location.hash='#install';
+    });
+
+    function closeIntro(){ intro.style.display='none'; try{ localStorage.setItem(START_KEY,'1'); }catch(e){} }
+
+    // close intro with Escape
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && intro.style.display==='flex') closeIntro(); });
+
+    // small reveal animations
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.reveal').forEach((el,i)=> setTimeout(()=>el.classList.add('show'), 120*i));
+    });
+  </script>
+</body>
+</html>
